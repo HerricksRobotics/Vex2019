@@ -1,4 +1,5 @@
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
+#pragma config(Sensor, dgtl1,  rightEncoder,   sensorRotation)
 #pragma config(Motor,  port1,           leftFront,     tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           leftBack,      tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           rightFront,    tmotorVex393_MC29, openLoop, reversed)
@@ -39,6 +40,10 @@ void liftArm(int speed) {
 	motor[arm2] = speed;
 }
 
+float distance() {
+	return 4 * PI * SensorValue[rightEncoder]/360;
+}
+
 task main()
 {
 	//Clears out previous sensor readings
@@ -47,20 +52,20 @@ task main()
 	//Reconfigures analog port 2 as a gyro sensor
 	SensorType[in2] = sensorGyro;
 	SensorValue[gyro] = 0;
-	SensorValue[rightEncoder] = 0;
-	
+
+
 	//Move forward to get in line with BPL
 	while (abs(distance()) < 24) {
 		moveForward(110);
 	}
 	moveForward(0);
-	
+
 	//Turn 90 degrees counter-clockwise, facing towards BPL
 	while (abs(SensorValue[gyro]) < 880) {
 			leftTurn(100);
 	}
 	leftTurn(0);
-	
+
 	//Move forward onto BPL (3 pts)
 	moveForward(127);
 	wait1Msec(2750);
