@@ -1,0 +1,112 @@
+#include "robot-config.h"
+          
+void leftDrive(int speed){
+    if speed == 0 {
+        LeftFront.stop();
+        LeftBack.stop();
+    }
+    else {
+    //Spin motors in fwd direciton; set velocity to 50rpm
+    LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+    }
+} 
+void rightDrive(int speed){
+    if speed == 0 {
+        RightFront.stop();
+        RightBack.stop();
+    }
+    else {
+        //Spin motors in fwd direciton; set velocity to 50rpm
+        RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+        RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+    }
+} 
+
+void armLift(int speed){
+    if speed == 0{
+        Arm1.stop();
+        Arm2.stop();
+    }
+    else{
+        Arm1.spin(directionType::fwd,speed,velocityUnits::rpm);
+        Arm2.spin(directionType::fwd,speed,velocityUnits::rpm);
+    }
+}
+
+void armDown(int speed){
+    if speed == 0{
+        Arm1.stop();
+        Arm2.stop();
+    }
+    else{
+        Arm1.spin(directionType::rev,speed,velocityUnits::rpm);
+        Arm2.spin(directionType::rev,speed,velocityUnits::rpm);
+    }
+}
+
+void intakeBall(int speed){
+    if speed === 0{
+        Intake.stop();
+    }
+    else{
+        Intake.spin(directionType::fwd,speed,velocityUnits::rpm);
+    }
+}
+
+void shootBall(int speed){
+    if speed == 0{
+        Linlaunch.stop();
+    }
+    else{
+        Linlaunch.spin(directionType::fwd,speed,velocityUnits::rpm);
+    }
+}
+
+
+int main() {
+    short leftSpeed = 0; //Initializes speed for leftDrive
+    short rightSpeed = 0; //Intializes speed for rightDrive
+    
+    //Left and Right Encoder Setup
+    LeftEncoder.resetRotation();
+    RightEncoder.resetRotation();
+    
+    while (true) {
+        //Controller 1 Functions: drive train 
+        //Sets right drive train speed, based on Controller 1 axis 2 value
+        if (Controller1.Axis2.value() > -35 && Controller1.Axis2.value() < 35){
+            rightSpeed = 0;
+        }
+        else{
+            rightSpeed = Controller1.Axis2.value();
+        }
+        
+        //Sets left drive train speed, based on controller 1 axis 2
+        if (Controller1.Axis3.value() > -35 && Controller1.Axis3.value() < 35){
+            rightSpeed = 0;
+        }
+        else{
+            rightspeed = Controller1.Axis3.value();
+        }
+        
+        //Calls leftDrive and rigth Drive funtions with leftSpeed and rightSpeed as parameters, respectively
+        leftDrive(leftSpeed);
+        rightDrive(rightDrive);
+        
+        //---------------------------------------------------------------------------------
+        
+        //Controller 2 Functions: Arm movement, Intake, Linear Launcher
+        
+        //Controls arm functionality
+        Controller2.ButtonL1.pressed(armLift(100)); //Raises arm with a speed of 100 rpm (fwd direction)
+        Controller2.ButtonR1.pressed(armDown(100)); //Lowers arm with a speed of 100 rpm (rev direction)
+        
+        //Controls intake functionality
+        Controller2.ButtonL2.pressed(intakeBall(100));
+        
+        //Controls linear launcher
+        Controller2.ButtonL2.pressed(shootBall(100)); 
+        
+    }
+}
