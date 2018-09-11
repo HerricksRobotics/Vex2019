@@ -1,5 +1,9 @@
 #include "robot-config.h"
-          
+
+//Max Points: 6 pts
+//Min Points: 3 pts
+//Starting Point: BS1
+
 void moveForward(int speed){
     if speed == 0 {
         LeftFront.stop();
