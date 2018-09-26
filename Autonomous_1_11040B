@@ -1,0 +1,85 @@
+#include "robot-config.h"
+        
+//Starting Point: BS1
+//3 points
+//Language: Vex C++
+
+//Stops robot completely
+void stop(){
+    LeftBack.stop();
+    LeftFront.stop();
+    RightFront.stop();
+    RightBack.stop();
+}
+
+//move forward at speed
+void moveForward(int speed){
+    //all motors spin forward
+    LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+    RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+}
+
+//turn left
+void leftTurn(int speed){
+    //left motors spin forwards and right motors spin backwards to turn left
+    LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+    RightFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    RightBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+}
+
+//turn right
+void rightTurn(int speed){
+    //left motors spin backwards and right motors spin forwards to turn right
+    LeftFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
+}
+
+//measures distance using encoder
+double distance(){
+    double pi = 3.1415926535897;   
+    return 4*pi*(RightEncoder.rotation(rotationUnits::deg)/360);
+}
+
+//resets encoders
+void resetEncoder(){
+    LeftEncoder.resetRotation;
+    RightEncoder.resetRotation;
+}
+
+
+//autonomous code
+int main(){
+    //reset encoder values
+    resetEncoder();
+    
+    //turn 90 degrees counter-clockwise
+    while (abs(Gyro.value())<880){
+        leftTurn(100);
+    }
+    stop();//stops
+    
+    //move forward to align with parking spots
+    while(abs(distance())<100){
+        moveForward(100);
+    }
+    stop();//stops
+    
+    //reset gyro
+    
+    //turn 90 degrees clockwise to face parking spots
+    while(abs(Gyro.value()< 880){
+        rightTurn(100);
+    }
+    stop();//stops
+    
+    //move forward onto BPL (3 points)
+    while (abs(distance())<200){
+        moveForward(100);
+    }
+    stop();//stops
+}
