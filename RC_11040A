@@ -1,72 +1,38 @@
 #include "robot-config.h"
           
 void leftDrive(int speed){
-    if speed == 0 {
-        LeftFront.stop();
-        LeftBack.stop();
-    }
-    else {
     //Spin motors in fwd direciton; set velocity to 50rpm
     LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
     LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
 } 
 void rightDrive(int speed){
-    if speed == 0 {
-        RightFront.stop();
-        RightBack.stop();
-    }
-    else {
         //Spin motors in fwd direciton; set velocity to 50rpm
         RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
         RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
 } 
 
 void armLift(int speed){
-    if speed == 0{
-        Arm1.stop();
-        Arm2.stop();
-    }
-    else{
         Arm1.spin(directionType::fwd,speed,velocityUnits::rpm);
         Arm2.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
 }
 
 void armDown(int speed){
-    if speed == 0{
-        Arm1.stop();
-        Arm2.stop();
-    }
-    else{
         Arm1.spin(directionType::rev,speed,velocityUnits::rpm);
         Arm2.spin(directionType::rev,speed,velocityUnits::rpm);
-    }
 }
 
 void intakeBall(int speed){
-    if speed === 0{
-        Intake.stop();
-    }
-    else{
         Intake.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
 }
 
 void shootBall(int speed){
-    if speed == 0{
-        Linlaunch.stop();
-    }
-    else{
         Linlaunch.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
 }
 
 
 int main() {
-    short leftSpeed = 0; //Initializes speed for leftDrive
-    short rightSpeed = 0; //Intializes speed for rightDrive
+    int leftSpeed = 0; //Initializes speed for leftDrive
+    int rightSpeed = 0; //Intializes speed for rightDrive
     
     //Left and Right Encoder Setup
     LeftEncoder.resetRotation();
