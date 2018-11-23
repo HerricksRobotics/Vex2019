@@ -1,8 +1,8 @@
 #include "robot-config.h"
         
 //Starting Point: BS1
+//Language: VEX C++
 //3 points
-//Language: Vex C++
 
 //Stops robot completely
 void stop(){
@@ -21,28 +21,30 @@ void moveForward(int speed){
     RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
 }
 
-//turn left
-void leftTurn(int speed){
-    //left motors spin forwards and right motors spin backwards to turn left
+//move backwards at speed
+void moveBackward(int speed){
+    //all motors spin backward
+    LeftBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    LeftFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    RightBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    RightFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
+}
+//turn right
+void rightTurn(int speed){
+    //left motors spin forwards and right motors spin backwards to turn right
     LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
     LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
     RightFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
     RightBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
 }
 
-//turn right
-void rightTurn(int speed){
-    //left motors spin backwards and right motors spin forwards to turn right
+//turn left
+void leftTurn(int speed){
+    //left motors spin backwards and right motors spin forwards to turn left
     LeftFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
     LeftBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
     RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
     RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
-}
-
-//measures distance using encoder
-double distance(){
-    double pi = 3.1415926535897;   
-    return 4*pi*(RightEncoder.rotation(rotationUnits::deg)/360);
 }
 
 //resets encoders
@@ -51,6 +53,11 @@ void resetEncoder(){
     RightEncoder.resetRotation;
 }
 
+//measures distance using encoder
+double distance(){
+    double pi = 3.1415926535897;   
+    return 4*pi*(RightEncoder.rotation(rotationUnits::deg)/360);
+}
 
 //autonomous code
 int main(){
@@ -83,3 +90,9 @@ int main(){
     }
     stop();//stops
 }
+
+
+
+
+
+
