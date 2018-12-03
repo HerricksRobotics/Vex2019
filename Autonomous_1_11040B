@@ -24,25 +24,25 @@ void moveForward(int speed){
 //move backwards at speed
 void moveBackward(int speed){
     //all motors spin backward
-    LeftBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
-    LeftFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
-    RightBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
-    RightFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::rev,speed,velocityUnits::rpm);
+    LeftFront.spin(directionType::rev,speed,velocityUnits::rpm);
+    RightBack.spin(directionType::rev,speed,velocityUnits::rpm);
+    RightFront.spin(directionType::rev,speed,velocityUnits::rpm);
 }
 //turn right
 void rightTurn(int speed){
     //left motors spin forwards and right motors spin backwards to turn right
     LeftFront.spin(directionType::fwd,speed,velocityUnits::rpm);
     LeftBack.spin(directionType::fwd,speed,velocityUnits::rpm);
-    RightFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
-    RightBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    RightFront.spin(directionType::rev,speed,velocityUnits::rpm);
+    RightBack.spin(directionType::rev,speed,velocityUnits::rpm);
 }
 
 //turn left
 void leftTurn(int speed){
     //left motors spin backwards and right motors spin forwards to turn left
-    LeftFront.spin(directionType::fwd,-speed,velocityUnits::rpm);
-    LeftBack.spin(directionType::fwd,-speed,velocityUnits::rpm);
+    LeftFront.spin(directionType::rev,speed,velocityUnits::rpm);
+    LeftBack.spin(directionType::rev,speed,velocityUnits::rpm);
     RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
     RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
 }
