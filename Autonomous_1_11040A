@@ -38,35 +38,19 @@ void moveBack(int speed){
 } 
 
 void turnRight(int speed){
-    if speed == 0 {
-        LeftFront.stop();
-        LeftBack.stop();
-        RightFront.stop();
-        RightBack.stop();
-    }
-    else {
-        //Spin motors in fwd direciton; set velocity to 50rpm
-        LeftFront.spin(directionType::fwd,-speed,velciotyUnits::rpm);
-        LeftBack.spin(directionType::fwd,-speed,velciotyUnits::rpm);
-        RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
-        RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
-    }
+    //Spin motors in fwd direciton; set velocity to 50rpm
+    LeftFront.spin(directionType::fwd,-speed,velciotyUnits::rpm);
+    LeftBack.spin(directionType::fwd,-speed,velciotyUnits::rpm);
+    RightFront.spin(directionType::fwd,speed,velocityUnits::rpm);
+    RightBack.spin(directionType::fwd,speed,velocityUnits::rpm);
 } 
 
 void turnLeft(int speed){
-    if speed == 0 {
-        LeftFront.stop();
-        LeftBack.stop();
-        RightFront.stop();
-        RightBack.stop();
-    }
-    else {
-        //Spin motors in fwd direciton; set velocity to 50rpm
-        LeftFront.spin(directionType::fwd,speed,velciotyUnits::rpm);
-        LeftBack.spin(directionType::fwd,speed,velciotyUnits::rpm);
-        RightFront.spin(directionType::fwd,-speed,velciotyUnits::rpm);
-        RightBack.spin(directionType::fwd,-speed,velciotyUnits::rpm);
-    }
+    //Spin motors in fwd direciton; set velocity to 50rpm
+    LeftFront.spin(directionType::fwd,speed,velciotyUnits::rpm);
+    LeftBack.spin(directionType::fwd,speed,velciotyUnits::rpm);
+    RightFront.spin(directionType::fwd,-speed,velciotyUnits::rpm);
+    RightBack.spin(directionType::fwd,-speed,velciotyUnits::rpm);
 }
 
 void distance(){
@@ -87,14 +71,23 @@ int main() {
        turnRight(100);
    }
    turnRight(0);
-    
+   
+   /*
+   //In case Gyro doesn't work
+   turnRight(100);
+   //Wait 3 seconds
+   task::sleep(3000);
+   //Turn off motors
+   turnRight(0);
+   */
+   
    //Shoots ball at BF2 (2 points)
    Intake.spin(directionType::fwd,100,velocityUnits::rpm);
    Intake.spin(directionType::fwd,0,velocityUnits::rpm);
    
    //Move forward towards BF1, hit BF1 (1 point)
-   while(abs(distance() < 100){
-       moveBack(100);
+   while(abs(distance() < 100) {
+       moveForward(100);
    }
    moveForward(0);
    
@@ -105,13 +98,24 @@ int main() {
    moveBack(0);  //Resets driver motors to 0
 
    //Set gyro sensor value to 0 (found no function in vcs command reference for resetting gyro value)
-         
-    
+       
    //Turn 90 degrees counter-clockwise
    while(abs(Gyro.value() < 880){
        leftTurn(100);
    }
    leftTurn(0); //Resets drive motors to 0
    
-   //Move forward onto BPL(3 points)
+   /*
+   //In case Gyro doesn't work
+   turnLeft(100);
+   //Wait 3 seconds
+   task::sleep(3000);
+   //Turn off motors
+   turnLeft(0);
+   */
+   
+   //Move backward onto BPL(3 points)
+   moveBack(100);
+   task::sleep(3000);
+   moveBack(0);
 }
